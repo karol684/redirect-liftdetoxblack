@@ -9,6 +9,7 @@
   <meta name="keywords" content="Lift Detox Black, suplemento, emagrecimento, WhatsApp, comprar">
 
   <!-- TAG DO PINTEREST COM EVENTO PERSONALIZADO -->
+  <!-- Pinterest Tag com Correspondência Avançada -->
   <script>
     !function(e){
       if(!window.pintrk){
@@ -24,15 +25,31 @@
       }
     }("https://s.pinimg.com/ct/core.js");
     
-    pintrk('load', '2614444780428');
+// Função para gerar SHA-256
+async function sha256(str) {
+  const buffer = new TextEncoder("utf-8").encode(str.trim().toLowerCase());
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+// Exemplo: email coletado dinamicamente ou fixo para teste
+const email = "lead@email.com"; // troque pelo email do lead capturado
+
+sha256(email).then(hashedEmail => {
+    pintrk('load', '2614444780428', { em: [hashedEmail] });
     pintrk('page');
     pintrk('track', 'Lead');
+  });
   </script>
 
   <noscript>
     <img height="1" width="1" style="display:none;" alt=""
       src="https://ct.pinterest.com/v3/?event=init&tid=2614444780428&noscript=1"/>
   </noscript>
+  <!-- End Pinterest Tag -->
+
 </head>
 <body>
   <p>Redirecionando para o WhatsApp...</p>
