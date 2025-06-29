@@ -59,6 +59,27 @@ sha256(email).then(hashedEmail => {
     const utms = urlParams.toString();
     const baseWhatsapp = "https://wa.me/5569992585472?text=Oi%2C%20quero%20saber%20mais%20sobre%20o%20Lift%20Detox%20Black%20que%20vi%20no%20Pinterest!";
     const redirectUrl = utms ? `${baseWhatsapp}&${utms}` : baseWhatsapp;
+
+// Captura o pclid (Click ID do Pinterest) se existir na URL
+const pclid = urlParams.get('pclid');
+
+// Opcional: enviar para sua API de conversão, se desejar rastrear leads automaticamente
+fetch("https://redirect-liftdetoxblack.vercel.app/api/pinterest", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    email: "lead@email.com", // se quiser capturar dinamicamente, substituir
+    phone: "5599999999999",  // se quiser capturar dinamicamente, substituir
+    value: 137,              // valor do pedido
+    currency: "BRL",
+    plano: "1pote",
+    click_id: pclid
+  }),
+})
+  .then(response => response.json())
+  .then(data => console.log("✅ Pinterest evento enviado:", data))
+  .catch(error => console.error("❌ Erro ao enviar evento Pinterest:", error));
+    
     window.location.href = redirectUrl;
   </script>
   
