@@ -40,6 +40,22 @@ export default async function handler(req, res) {
       break;
   }
 
+// GERAÇÃO DE EXTERNAL_ID CASO NÃO VENHA NO BODY
+const { email, phone, value, currency = 'BRL', plano = '', click_id, external_id } = req.body;
+
+// Adiciona external_id se existir, ou gera um automaticamente
+if (external_id) {
+  user_data.external_id = [hash(external_id)];
+} else {
+  const generatedExternalId = `lead_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+  user_data.external_id = [hash(generatedExternalId)];
+}
+
+// Adiciona click_id se existir
+if (click_id) {
+  user_data.click_id = click_id;
+}
+  
   const payload = {
     event_name: 'Purchase',
     event_time: Math.floor(Date.now() / 1000),
