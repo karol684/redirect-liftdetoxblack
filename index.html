@@ -7,13 +7,11 @@
   <meta name="description" content="Redirecionamento para atendimento exclusivo sobre Lift Detox Black via WhatsApp.">
   <meta name="keywords" content="Lift Detox Black, suplemento, emagrecimento, WhatsApp, comprar">
 
-  <!-- Pinterest Tag Base -->
+  <!-- Pinterest Tag Base e Avançada -->
   <script>
     !function(e){
       if(!window.pintrk){
-        window.pintrk=function(){
-          window.pintrk.queue.push(Array.prototype.slice.call(arguments))
-        };
+        window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};
         var n=window.pintrk;
         n.queue=[],n.version="3.0";
         var t=document.createElement("script");
@@ -24,36 +22,29 @@
       }
     }("https://s.pinimg.com/ct/core.js");
 
-    pintrk('load', '2614444780428');
-    pintrk('page');
-  </script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const pclid = urlParams.get('pclid');
+    const email = "lead@email.com";
 
-  <!-- Evento PageVisit com Product ID -->
-  <script>
-    setTimeout(function(){
-        pintrk('track', 'pagevisit', {
-            line_items: [{
-                product_id: 'LIFTDETOX1POTE'
-            }]
-        });
-    }, 500);
-  </script>
-
-  <!-- Pinterest Correspondência Avançada -->
-  <script>
     async function sha256(str) {
       const buffer = new TextEncoder("utf-8").encode(str.trim().toLowerCase());
       const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-      return Array.from(new Uint8Array(hashBuffer))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
     }
 
-    const email = "lead@email.com"; // substituir dinamicamente se tiver
     sha256(email).then(hashedEmail => {
-        pintrk('load', '2614444780428', { em: [hashedEmail] });
-        pintrk('page');
-        pintrk('track', 'Lead');
+      pintrk('load', '2614444780428', { em: [hashedEmail] });
+      pintrk('page');
+      pintrk('track', 'Lead', {
+        external_id: hashedEmail,
+        click_id: pclid,
+        line_items: [{ product_id: 'LIFTDETOX1POTE' }]
+      });
+      pintrk('track', 'pagevisit', {
+        external_id: hashedEmail,
+        click_id: pclid,
+        line_items: [{ product_id: 'LIFTDETOX1POTE' }]
+      });
     });
   </script>
 
@@ -61,7 +52,6 @@
     <img height="1" width="1" style="display:none;" alt=""
       src="https://ct.pinterest.com/v3/?event=init&tid=2614444780428&noscript=1"/>
   </noscript>
-  <!-- End Pinterest Tag -->
 </head>
 <body>
   <h1>Lift Detox Black</h1>
@@ -76,12 +66,11 @@
 
       const pclid = urlParams.get('pclid');
 
-      // Envio opcional para sua API de conversão
       fetch("https://redirect-liftdetoxblack.vercel.app/api/pinterest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: "lead@email.com", // capturar dinamicamente se quiser
+          email: "lead@email.com",
           phone: "5599999999999",
           value: 137,
           currency: "BRL",
@@ -89,12 +78,13 @@
           click_id: pclid
         }),
       })
-        .then(response => response.json())
-        .then(data => console.log("✅ Pinterest evento enviado:", data))
-        .catch(error => console.error("❌ Erro ao enviar evento Pinterest:", error));
+      .then(response => response.json())
+      .then(data => console.log("✅ Pinterest evento enviado:", data))
+      .catch(error => console.error("❌ Erro ao enviar evento Pinterest:", error));
 
       window.location.href = redirectUrl;
     }, 1500);
   </script>
 </body>
 </html>
+
