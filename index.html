@@ -1,90 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lift Detox Black - Redirecionando para o WhatsApp</title>
-  <meta name="description" content="Redirecionamento para atendimento exclusivo sobre Lift Detox Black via WhatsApp.">
-  <meta name="keywords" content="Lift Detox Black, suplemento, emagrecimento, WhatsApp, comprar">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lift Detox Black - Redirecionando para o WhatsApp</title>
+<meta name="description" content="Redirecionamento para atendimento exclusivo sobre Lift Detox Black via WhatsApp.">
 
-  <!-- Pinterest Tag Base e Avançada -->
-  <script>
-    !function(e){
-      if(!window.pintrk){
-        window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};
+<!-- Pinterest Tag Base -->
+<script>
+!function(e){
+    if(!window.pintrk){
+        window.pintrk=function(){
+            window.pintrk.queue.push(Array.prototype.slice.call(arguments));
+        };
         var n=window.pintrk;
         n.queue=[],n.version="3.0";
         var t=document.createElement("script");
         t.async=!0;
         t.src=e;
         var r=document.getElementsByTagName("script")[0];
-        r.parentNode.insertBefore(t,r)
-      }
-    }("https://s.pinimg.com/ct/core.js");
+        r.parentNode.insertBefore(t,r);
+    }
+}("https://s.pinimg.com/ct/core.js");
 
+// Função para gerar SHA-256
+async function sha256(str) {
+    const buffer = new TextEncoder("utf-8").encode(str.trim().toLowerCase());
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+    return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+document.addEventListener("DOMContentLoaded", async function() {
     const urlParams = new URLSearchParams(window.location.search);
     const pclid = urlParams.get('pclid');
-    const email = "lead@email.com";
+    const email = "lead@email.com"; // Substitua por coleta dinâmica se tiver
 
-    async function sha256(str) {
-      const buffer = new TextEncoder("utf-8").encode(str.trim().toLowerCase());
-      const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
-    }
+    const hashedEmail = await sha256(email);
 
-    sha256(email).then(hashedEmail => {
-      pintrk('load', '2614444780428', { em: [hashedEmail] });
-      pintrk('page');
-      pintrk('track', 'Lead', {
+    // Inicializa Pinterest com correspondência avançada
+    pintrk('load', '2614444780428', { em: [hashedEmail] });
+    pintrk('page');
+
+    // Evento: Visita à página
+    pintrk('track', 'pagevisit', {
         external_id: hashedEmail,
         click_id: pclid,
-        line_items: [{ product_id: 'LIFTDETOX1POTE' }]
-      });
-      pintrk('track', 'pagevisit', {
-        external_id: hashedEmail,
-        click_id: pclid,
-        line_items: [{ product_id: 'LIFTDETOX1POTE' }]
-      });
+        line_items: [{
+            product_id: 'LIFTDETOX1POTE'
+        }]
     });
-  </script>
 
-  <noscript>
+    // Evento: Adição ao carrinho
+    pintrk('track', 'addtocart', {
+        external_id: hashedEmail,
+        click_id: pclid,
+        line_items: [{
+            product_id: 'LIFTDETOX1POTE'
+        }]
+    });
+
+    // Evento: Finalização da compra
+    pintrk('track', 'checkout', {
+        external_id: hashedEmail,
+        click_id: pclid,
+        value: 137.00, // valor do produto
+        currency: 'BRL',
+        line_items: [{
+            product_id: 'LIFTDETOX1POTE'
+        }]
+    });
+
+    // Redireciona após delay para o WhatsApp
+    const utms = urlParams.toString();
+    const baseWhatsapp = "https://wa.me/5569992585472?text=Oi%2C%20quero%20saber%20mais%20sobre%20o%20Lift%20Detox%20Black%20que%20vi%20no%20Pinterest!";
+    const redirectUrl = utms ? `${baseWhatsapp}&${utms}` : baseWhatsapp;
+
+    setTimeout(function(){
+        window.location.href = redirectUrl;
+    }, 1500);
+});
+</script>
+
+<noscript>
     <img height="1" width="1" style="display:none;" alt=""
-      src="https://ct.pinterest.com/v3/?event=init&tid=2614444780428&noscript=1"/>
-  </noscript>
+        src="https://ct.pinterest.com/v3/?event=init&tid=2614444780428&noscript=1" />
+</noscript>
+<!-- End Pinterest Tag -->
 </head>
 <body>
-  <h1>Lift Detox Black</h1>
-  <p>Redirecionando para o WhatsApp, aguarde...</p>
-
-  <script>
-    setTimeout(function(){
-      const urlParams = new URLSearchParams(window.location.search);
-      const utms = urlParams.toString();
-      const baseWhatsapp = "https://wa.me/5569992585472?text=Oi%2C%20quero%20saber%20mais%20sobre%20o%20Lift%20Detox%20Black%20que%20vi%20no%20Pinterest!";
-      const redirectUrl = utms ? `${baseWhatsapp}&${utms}` : baseWhatsapp;
-
-      const pclid = urlParams.get('pclid');
-
-      fetch("https://redirect-liftdetoxblack.vercel.app/api/pinterest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: "lead@email.com",
-          phone: "5599999999999",
-          value: 137,
-          currency: "BRL",
-          plano: "1pote",
-          click_id: pclid
-        }),
-      })
-      .then(response => response.json())
-      .then(data => console.log("✅ Pinterest evento enviado:", data))
-      .catch(error => console.error("❌ Erro ao enviar evento Pinterest:", error));
-
-      window.location.href = redirectUrl;
-    }, 1500);
-  </script>
+<p>Redirecionando para o WhatsApp, aguarde...</p>
 </body>
 </html>
-
