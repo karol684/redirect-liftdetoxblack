@@ -25,7 +25,7 @@ Este repositório contém a **página de redirecionamento para WhatsApp** do pro
 
 1️⃣ **Edite o Pixel do Meta no `index.html`**
 
-- Substitua `SEU_PIXEL_ID_AQUI` pelo ID do seu Pixel no trecho:
+- Substitua `1680388886212574` pelo ID do seu Pixel no trecho:
 
 ```html
 <!-- Meta Pixel Code -->
